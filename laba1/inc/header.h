@@ -3,16 +3,13 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-
-#define NULL 0;
+#include <stdio.h>
+#include "list.h"
 
 void print_char(char s);
 void print_str(char *str);
-
-typedef struct node
-{
-    int num;
-    struct node *next;
-}   t_node;
+int *array_atoi(char **arr, int size);
+t_node *setup_list(int *arr, int size);
+void print_list(t_node *start);
 
 #endif

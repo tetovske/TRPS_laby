@@ -7,7 +7,6 @@ typedef struct node
     struct node *next;
 }   t_node;
 
-
 t_node *new_node(int value);
 t_node *push_back(t_node *start, int value);
 t_node *push_front(t_node *start, int value);

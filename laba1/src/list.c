@@ -3,11 +3,12 @@
 
 t_node *new_node(int value)
 {
-    new_start = (struct node *)malloc(sizeof(t_node));
-    printf("node size: %d", sizeof(t_node));
-    if (new_start != NULL)
-        new_start->value = value;
-    return (new_start);
+    t_node *node;
+
+    node = (t_node *)malloc(sizeof(t_node));
+    if (node != NULL)
+        node->value = value;
+    return (node);
 }
 
 t_node *push_back(t_node *start, int value)
@@ -23,9 +24,7 @@ t_node *push_back(t_node *start, int value)
 t_node *push_front(t_node *start, int value)
 {
     t_node *node;
-    t_node *sv_start;
 
-    sv_start = start;
     node = new_node(value);
     if (start != NULL && node != NULL)
     {

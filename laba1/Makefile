@@ -3,8 +3,8 @@ COMPILER = gcc
 SRC = ./src/
 INC = ./inc/
 
-SOURCES = io_lib.c main.c
-HEADERS = header.h
+SOURCES = io_lib.c main.c list.c
+HEADERS = header.h list.h
 OBJECTS = $(SOURCES:.c=.o)
 EXECUTABLE = laba
 FLAGS = -Wall
