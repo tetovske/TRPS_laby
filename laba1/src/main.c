@@ -1,11 +1,25 @@
 #include "header.h"
 #include "list.h"
+#include "sorts.h"
+
+static inline uint64_t RDTSC()
+{
+    unsigned int hi, lo;
+    __asm__ volatile("rdtsc" : "=a" (lo), "=d" (hi));
+    return ((uint64_t)hi << 32) | lo;
+}
 
 int main(int argc, char **argv)
 {
     int *values = array_atoi(argv, argc);
+    //unsigned int begin = RDTSC();
     t_node *list = setup_list(values, argc - 1);
-    free_list(list);
+    //unsigned int end = RDTSC();
+    //printf("time: %d\n", end - begin);
+    printf("list: ");
+    print_list(list);
+    printf("sorted list:\n");
+    list = merge_sort(&list);
     print_list(list);
     return (0);
 }

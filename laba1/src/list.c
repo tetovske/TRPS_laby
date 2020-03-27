@@ -48,4 +48,3 @@ void remove_node(t_node *prev_node)
 {
 
 }
-
