@@ -35,7 +35,6 @@ t_node *push_front(t_node *start, int value)
     return (node);
 }
 
-
 void free_list(t_node *start)
 {
     if (start->next != NULL)
@@ -43,8 +42,21 @@ void free_list(t_node *start)
     free(start);
 }
 
-
-void remove_node(t_node *prev_node)
+void remove_node(t_node **head, t_node *elem)
 {
+    t_node *node = *head;
 
+    if (!(*head) || !elem)
+        return;
+    if (elem == *head)
+        *head = (*head)->next;
+    else
+    {
+        head = &node;
+        while (head && (*head)->next != elem)
+            *head = (*head)->next;
+        (*head)->next = elem->next;
+    }
+    free(elem);
+    return;
 }

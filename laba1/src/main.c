@@ -11,16 +11,38 @@ static inline uint64_t RDTSC()
 
 int main(int argc, char **argv)
 {
+    unsigned int begin, end;
     int *values = array_atoi(argv, argc);
-    //unsigned int begin = RDTSC();
     t_node *list = setup_list(values, argc - 1);
-    //unsigned int end = RDTSC();
-    //printf("time: %d\n", end - begin);
-    printf("list: ");
+    t_bin_node *tree_root = create_tree(values, argc - 1);
+    print_binary_tree(tree_root);
+    printf("\n");
     print_list(list);
-    printf("sorted list:\n");
-    list = merge_sort(&list);
+    printf("\n");
+
+    begin = RDTSC();
+    remove_tree_node(tree_root, tree_root->right->right);
+    end = RDTSC();
+    printf("remove node from tree tacts: %d\n", end - begin);
+    print_binary_tree(tree_root);
+    printf("\n");
+    begin = RDTSC();
+    remove_node(&list, list->next->next);
+    end = RDTSC();
+    printf("remove node from list tacts: %d\n", end - begin);
     print_list(list);
+    printf("\n");
+
+    begin = RDTSC();
+    push_front(list, -4);
+    end = RDTSC();
+    print_list(list);
+    printf("\nadd node to list tacts: %d\n", end - begin);
+    begin = RDTSC();
+    push_tree_node(tree_root, -4);
+    end = RDTSC();
+    print_binary_tree(tree_root);
+    printf("\nadd node to tree tacts: %d\n", end - begin);
     return (0);
 }
 
@@ -30,7 +52,7 @@ int *array_atoi(char **arr, int size)
     int i = 0;
 
     while (++i < size)
-        res[i - 1] = atoi(arr[i]);
+        res[i - 1] = atoi(arr[i]); 
     return (res);
 }
 
@@ -51,7 +73,17 @@ void print_list(t_node *start)
 {
     if (start != NULL)
     {
-        printf("%d\n", start->value);
+        printf("%d ", start->value);
         print_list(start->next);
+    }
+}
+
+void print_binary_tree(t_bin_node *root)
+{
+    if (root)
+    {
+        print_binary_tree(root->left);
+        printf("%d ", root->value);
+        print_binary_tree(root->right);
     }
 }

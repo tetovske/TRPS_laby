@@ -11,14 +11,15 @@ static t_node *merge(t_node *half_a, t_node *half_b)
     else if (half_b == NULL) 
         return (half_a); 
   
-    if (half_a->value <= half_b->value) { 
+    if (half_a->value <= half_b->value) {
         result = half_a; 
         result->next = merge(half_a->next, half_b); 
     } 
-    else { 
+    else 
+    { 
         result = half_b; 
         result->next = merge(half_a, half_b->next); 
-    } 
+    }
     return (result); 
 }
 
@@ -47,7 +48,6 @@ static void split_lists(t_node *head, t_node **half_a, t_node **half_b)
 
 t_node *merge_sort(t_node **list)
 {
-    //t_node *head = *list;
     t_node *half_a, *half_b;
 
     if ((*list == NULL) || ((*list)->next == NULL))
