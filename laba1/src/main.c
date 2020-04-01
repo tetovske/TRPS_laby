@@ -1,6 +1,9 @@
 #include "header.h"
 #include "list.h"
 #include "sorts.h"
+#include "stdlib.h"
+
+#define BUF_SIZE 10
 
 static inline uint64_t RDTSC()
 {
@@ -12,38 +15,83 @@ static inline uint64_t RDTSC()
 int main(int argc, char **argv)
 {
     unsigned int begin, end;
+
+    if (argc == 1)
+    {
+        test();
+        return (0);
+    }
+
     int *values = array_atoi(argv, argc);
     t_node *list = setup_list(values, argc - 1);
     t_bin_node *tree_root = create_tree(values, argc - 1);
-    print_binary_tree(tree_root);
-    printf("\n");
-    print_list(list);
-    printf("\n");
 
     begin = RDTSC();
-    remove_tree_node(tree_root, tree_root->right->right);
+    remove_tree_node(tree_root, tree_root->right);
     end = RDTSC();
-    printf("remove node from tree tacts: %d\n", end - begin);
-    print_binary_tree(tree_root);
-    printf("\n");
+
+    printf("количество таков CPU при удалении : %d\n", end - begin);
+
     begin = RDTSC();
     remove_node(&list, list->next->next);
     end = RDTSC();
+
     printf("remove node from list tacts: %d\n", end - begin);
-    print_list(list);
-    printf("\n");
 
     begin = RDTSC();
     push_front(list, -4);
     end = RDTSC();
-    print_list(list);
-    printf("\nadd node to list tacts: %d\n", end - begin);
+
+    printf("add node to list tacts: %d\n", end - begin);
+
     begin = RDTSC();
     push_tree_node(tree_root, -4);
     end = RDTSC();
-    print_binary_tree(tree_root);
-    printf("\nadd node to tree tacts: %d\n", end - begin);
+
+    printf("add node to tree tacts: %d\n", end - begin);
     return (0);
+}
+
+void test(void)
+{
+    srand(time(NULL));
+    char str_buf[BUF_SIZE]; 
+    unsigned int begin, end;
+    FILE *file_addition = fopen("data_add", "a");
+    FILE *file_remove = fopen("data_remove", "a");
+    t_node *list = new_node(rand() % 10000);
+    t_bin_node *tree_root = create_tree_node(rand() % 10000);
+
+    for (int i = 1; i < 10000; ++i)
+    {
+        int tacts_add, tacts_remove;
+        int value = rand() % 10000;
+        push_front(list, value);
+        push_tree_node(tree_root, value);
+
+        value = rand() % 10000;
+
+        begin = RDTSC();
+        push_front(list, -4);
+        end = RDTSC();
+        tacts_add = end - begin;
+
+        begin = RDTSC();
+        remove_node(&list, );
+        end = RDTSC();
+        tacts_add = end - begin;
+        sprintf(str_buf, "%d %d %d", i, tacts_add, tacts_remove);
+    }
+    sprintf(s_number, "%d", num); 
+    printf("%s", result);
+    fputs("hello", file);
+    close(file);
+
+    for (int i = 0; i < 1000; ++i);
+    {
+        int num
+        printf("%d\n", rand() % 10000);
+    }
 }
 
 int *array_atoi(char **arr, int size)

@@ -15,5 +15,6 @@ int *array_atoi(char **arr, int size);
 t_node *setup_list(int *arr, int size);
 void print_list(t_node *start);
 void print_binary_tree(t_bin_node *root);
+void test(void);
 
 #endif

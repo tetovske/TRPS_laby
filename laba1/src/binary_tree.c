@@ -1,16 +1,45 @@
 #include "header.h"
 #include "binary_tree.h"
 
+int *bubble_sort(int *arr, int size)
+{
+    int i = -1, j;
+
+    while (++i < size - 1)
+    {
+        j = -1;
+        while (++j < size - i - 1)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                int mem = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = mem;
+            }
+        }
+    }
+    return (arr);
+}
+
+t_bin_node *create_balanced_tree(int *arr, int from, int to)
+{
+    int center = (to + from) / 2;
+
+    if (from > to)
+        return (NULL);
+    t_bin_node *node = create_tree_node(arr[center]);
+    node->right = create_balanced_tree(arr, center + 1, to);
+    node->left = create_balanced_tree(arr, from, center - 1);
+    return (node);
+}
+
 t_bin_node *create_tree(int *arr, int size)
 {
-    int i = 0;
     t_bin_node *root;
+    int *(*sort)(int *, int) = &bubble_sort;
 
-    if (size < 1 || !arr)
-        return NULL;
-    root = create_tree_node(arr[0]);
-    while (++i < size)
-        push_tree_node(root, arr[i]);
+    arr = sort(arr, size);
+    root = create_balanced_tree(arr, 0, size - 1);
     return (root);
 }
 
@@ -23,9 +52,15 @@ t_bin_node *create_tree_node(int value)
     return (new_root);
 }
 
-void push_tree_node(t_bin_node *root, int value)
+t_bin_node *push_tree_node(t_bin_node *root, int value)
 {
-    if (value > root->value)
+    if (!root)
+    {
+        t_bin_node *root = (t_bin_node *)malloc(sizeof(t_bin_node));
+        root->value = value;
+        return (root);
+    }
+    else if (value > root->value)
     {
         if (!(root->right))
         {
@@ -45,14 +80,14 @@ void push_tree_node(t_bin_node *root, int value)
         else
             push_tree_node(root->left, value);
     }
+    return (root);
 }
 
 static t_bin_node *min_from_subtree(t_bin_node *root)
 {
     if (root->left)
         return (min_from_subtree(root->left));
-    else
-        return (root);
+    return (root);
 }
 
 t_bin_node *remove_tree_node(t_bin_node *root, t_bin_node *node)

@@ -9,7 +9,8 @@ typedef struct s_bin_node
 
 t_bin_node *create_tree_node(int value);
 t_bin_node *create_tree(int *arr, int size);
-void push_tree_node(t_bin_node *root, int value);
+t_bin_node *push_tree_node(t_bin_node *root, int value);
 t_bin_node *remove_tree_node(t_bin_node *root, t_bin_node *node);
+t_bin_node *create_balanced_tree(int *arr, int from, int to);
 
 #endif

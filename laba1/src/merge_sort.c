@@ -5,9 +5,9 @@
 static t_node *merge(t_node *half_a, t_node *half_b)
 {
     t_node *result = NULL;
-  
-    if (half_a == NULL) 
-        return (half_b); 
+
+    if (half_a == NULL)
+        return (half_b);
     else if (half_b == NULL) 
         return (half_a); 
   
